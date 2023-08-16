@@ -105,4 +105,4 @@ deploy:
   type: git
   repo: git@github.com:newGaoXin/newGaoXin.github.io.git
   branch: main
-  message: 404页面
+  message: 小黑子头像
