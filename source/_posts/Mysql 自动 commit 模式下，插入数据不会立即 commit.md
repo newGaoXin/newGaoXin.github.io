@@ -6,7 +6,6 @@ tags:
 - Spring
 categories:
 - MySQL
-- Spring
 description: 在工作中使用 SpringBoot 框架开发项目，新增数据有概率出现后立即刷新页面，没有获取到最新插入的数据，第二次刷新才获取到最新数据的问题记录学习
 comments: true
 ---
