@@ -22,7 +22,13 @@
 <p>因此，insert操作何时commit取决于多个因素，包括系统负载、磁盘速度、redo log的大小等等。如果需要立即commit，可以使用MySQL的“commit”命令将数据立即提交到磁盘中。</p>
 <h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>由于在项目场景中，没有使用事务，所以在 insert 数据持久化到数据库中时，依赖于 MySQL 数据库到自动 commit ，而自动 commit 并不会在每次 insert 之后都会执行，而 commit 时间有取决于系统负载、磁盘速度、redo log的大小等等因素</p>
 <p>当时这个问题也是在开发线测试的时候发现的，开发线的机器资源紧张，或许在 insert 之后，机器资源被其他应用抢占，在流程二结束后，MySQL 抢占到机器资源，持久化到数据库，导致前端并没有拉取到最新数据</p>
-]]></content>
+<script src="https://utteranc.es/client.js"
+        repo="https://github.com/newGaoXin/newGaoXin.github.io/tree/main"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>]]></content>
       <categories>
         <category>MySQL</category>
       </categories>
