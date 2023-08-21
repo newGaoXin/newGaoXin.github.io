@@ -13,7 +13,7 @@ timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://localhost:4000/
+url: https://newgaoxin.github.io/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -105,4 +105,4 @@ deploy:
   type: git
   repo: git@github.com:newGaoXin/newGaoXin.github.io.git
   branch: main
-  message: 评论系统
+  message: 评论系统跳转博客
