@@ -817,3 +817,9 @@ images: images
 
 # Theme version
 version: 5.1.4
+
+utterance:
+  enable: true
+  repo: newGaoXin/newGaoXin.github.io
+  issue_term: title # pathname, url, title, og:title [ISSUE NUMBER] or [SPECIFIC TERM]
+  theme: github-light # github-light or github-dark

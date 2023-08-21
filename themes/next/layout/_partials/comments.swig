@@ -65,6 +65,11 @@
   {% elseif theme.valine.appid and theme.valine.appkey %}
     <div class="comments" id="comments">
     </div>
+
+  {% elseif theme.utterance.enable %}
+    <div class="comments" id="comments">
+      {% include '../_third-party/comments/utterance.swig' %}
+   </div>
   {% endif %}
 
 {% endif %}
