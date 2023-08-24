@@ -105,4 +105,4 @@ deploy:
   type: git
   repo: git@github.com:newGaoXin/newGaoXin.github.io.git
   branch: main
-  message: 评论系统跳转博客
+  message: 文章出现两个评论问题修复
