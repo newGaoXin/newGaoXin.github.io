@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: newGaoXin的博客
+title: newGaoXin 的博客
 subtitle: ''
 description: ''
 keywords:
@@ -105,4 +105,4 @@ deploy:
   type: git
   repo: git@github.com:newGaoXin/newGaoXin.github.io.git
   branch: main
-  message: 文章出现两个评论问题修复
+  message: 修复日志按钮条状问题
