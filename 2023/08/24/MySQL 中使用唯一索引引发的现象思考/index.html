@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MySQL," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="newGaoXin的博客">
-<meta property="og:url" content="https://newgaoxin.github.io/archives/2023/index.html">
+<meta name="description" content="在项目中使用 MySQL 中唯一索引引发的现象，对其进行的思考记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 中使用唯一索引引发的现象思考">
+<meta property="og:url" content="https://newgaoxin.github.io/2023/08/24/MySQL%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/index.html">
 <meta property="og:site_name" content="newGaoXin的博客">
+<meta property="og:description" content="在项目中使用 MySQL 中唯一索引引发的现象，对其进行的思考记录">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-08-24T15:08:10.000Z">
+<meta property="article:modified_time" content="2023-08-24T15:18:52.150Z">
 <meta property="article:author" content="newGaoXin">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://newgaoxin.github.io/archives/2023/"/>
+  <link rel="canonical" href="https://newgaoxin.github.io/2023/08/24/MySQL 中使用唯一索引引发的现象思考/"/>
 
 
 
 
 
-  <title>归档 | newGaoXin的博客</title>
+  <title>MySQL 中使用唯一索引引发的现象思考 | newGaoXin的博客</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -268,111 +273,343 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 2 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2023">2023</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://newgaoxin.github.io/2023/08/24/MySQL%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="newGaoXin的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2023/10/13/Mysql%20%E8%87%AA%E5%8A%A8%20commit%20%E6%A8%A1%E5%BC%8F%E4%B8%8B%EF%BC%8C%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%BC%9A%E7%AB%8B%E5%8D%B3%20commit/" itemprop="url">
-              
-                <span itemprop="name">Mysql 自动 commit 模式下，插入数据不会立即 commit</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">MySQL 中使用唯一索引引发的现象思考</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-10-13T15:34:10+08:00"
-              content="2023-10-13" >
-          10-13
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-08-24T23:08:10+08:00">
+                2023-08-24
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  在项目中使用 MySQL 中唯一索引引发的现象，对其进行的思考记录
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/08/24/MySQL%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/" itemprop="url">
-              
-                <span itemprop="name">MySQL 中使用唯一索引引发的现象思考</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-08-24T23:08:10+08:00"
-              content="2023-08-24" >
-          08-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
+      
+        <h1 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h1><p>我们的项目是以检查开展业务，可以增删改检查表，产品希望检查表进行权限设置，只有拥有指定权限的用户，才可以使用检查表。</p>
+<p>在开发中我在数据库中创建了一张 <code>cehcksheet_use_permission</code>（检查表使用权限表）并使用了唯一索引去做约束</p>
+<p>SQL：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE cehcksheet_use_permission(</span><br><span class="line">	`id` bigint primary key AUTO_INCREMENT,</span><br><span class="line">  `checksheet_id` bigint not null,</span><br><span class="line">  `permission_id` bigint not null,</span><br><span class="line">  UNIQUE INDEX checksheet_permission_u_index(`checksheet_id`,`permission_id`)</span><br><span class="line">) </span><br></pre></td></tr></table></figure>
+
+<p>项目数据库技术：MySQL InnoDB 存储引擎</p>
+<h1 id="二、现象"><a href="#二、现象" class="headerlink" title="二、现象"></a>二、现象</h1><ol>
+<li><p>当我分别对检查表id 100、101、102 设置了 权限id 120</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO `cehcksheet_use_permission`(`checksheet_id`,`permission_id`) VALUES(100,120),(101,120),(102,120)</span><br></pre></td></tr></table></figure>
+
+<p>数据库中看到的数据是</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>checksheet_id</th>
+<th>permission_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>100</td>
+<td>120</td>
+</tr>
+<tr>
+<td>2</td>
+<td>101</td>
+<td>120</td>
+</tr>
+<tr>
+<td>3</td>
+<td>102</td>
+<td>120</td>
+</tr>
+</tbody></table>
+</li>
+<li><p>当我再次分别对检查表id 100、101、102 设置了 权限id 90</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO `cehcksheet_use_permission`(`checksheet_id`,`permission_id`) VALUES(100,90),(101,90),(102,90)</span><br></pre></td></tr></table></figure>
+
+<p>数据库中看到的数据是</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>checksheet_id</th>
+<th>permission_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4</td>
+<td>100</td>
+<td>90</td>
+</tr>
+<tr>
+<td>1</td>
+<td>100</td>
+<td>120</td>
+</tr>
+<tr>
+<td>5</td>
+<td>101</td>
+<td>90</td>
+</tr>
+<tr>
+<td>2</td>
+<td>101</td>
+<td>120</td>
+</tr>
+<tr>
+<td>6</td>
+<td>102</td>
+<td>90</td>
+</tr>
+<tr>
+<td>3</td>
+<td>102</td>
+<td>120</td>
+</tr>
+</tbody></table>
+<p>从第二次的批量插入数据可以看到，***<u>后插入的数据没有按照id去排序了，看起来像是根据联合唯一索引去排序了</u>***</p>
+</li>
+<li><p>尝试第三次插入数据，验证想法，再次分别对检查表id 100、101、102 设置了 权限id 140</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> `cehcksheet_use_permission`(`checksheet_id`,`permission_id`) <span class="keyword">VALUES</span>(<span class="number">100</span>,<span class="number">140</span>),(<span class="number">101</span>,<span class="number">140</span>),(<span class="number">102</span>,<span class="number">140</span>)</span><br></pre></td></tr></table></figure>
+
+<p>数据库中看到的数据是</p>
+<table>
+<thead>
+<tr>
+<th>id</th>
+<th>checksheet_id</th>
+<th>permission_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>4</td>
+<td>100</td>
+<td>90</td>
+</tr>
+<tr>
+<td>1</td>
+<td>100</td>
+<td>120</td>
+</tr>
+<tr>
+<td>10</td>
+<td>100</td>
+<td>140</td>
+</tr>
+<tr>
+<td>5</td>
+<td>101</td>
+<td>90</td>
+</tr>
+<tr>
+<td>2</td>
+<td>101</td>
+<td>120</td>
+</tr>
+<tr>
+<td>11</td>
+<td>101</td>
+<td>140</td>
+</tr>
+<tr>
+<td>6</td>
+<td>102</td>
+<td>90</td>
+</tr>
+<tr>
+<td>3</td>
+<td>102</td>
+<td>120</td>
+</tr>
+<tr>
+<td>12</td>
+<td>102</td>
+<td>140</td>
+</tr>
+</tbody></table>
+<p>证明了按照联合唯一索引去排序的想法，为什么会导致这样子呢？</p>
+</li>
+</ol>
+<h1 id="三、分析"><a href="#三、分析" class="headerlink" title="三、分析"></a>三、分析</h1><h2 id="1-通过-SELECT-FROM-查询时，数据是如何排序的"><a href="#1-通过-SELECT-FROM-查询时，数据是如何排序的" class="headerlink" title="1 通过 SELECT * FROM 查询时，数据是如何排序的"></a>1 通过 SELECT * FROM 查询时，数据是如何排序的</h2><h3 id="1-1-SELECT-FROM-查询结果是按照主键id排序吗？"><a href="#1-1-SELECT-FROM-查询结果是按照主键id排序吗？" class="headerlink" title="1.1 SELECT * FROM 查询结果是按照主键id排序吗？"></a>1.1 SELECT * FROM 查询结果是按照主键id排序吗？</h3><p>并不是，只是因为我们在创建一张表时，假设表只设置了主键，没有像本篇文章的情况一样还设置的唯一索引，那么通过 <code>SELECT * FROM</code> 查询结果看到数据结果是主键 ID 有序递增，只是因为在插入数据时，是按照了主键索引顺序去插入数据写入到磁盘中，所以当我们 <code>SELECT * FROM</code> 查询的时候，其实看到的是数据存储在磁盘的顺序。</p>
+<p>所以在我的案例场景中，是不是联合索引打破了根据主键索引有序插入这个规则，导致我们看到的数据顺序是按照联合索引去排序的？</p>
+<h2 id="2-索引-INSERT-工作原理"><a href="#2-索引-INSERT-工作原理" class="headerlink" title="2 索引 INSERT 工作原理"></a>2 索引 INSERT 工作原理</h2><p>在创建表的时候我设置了主键索引（<code>id</code>）以及联合唯一索引(<code> checksheet_permission_u_index</code>)</p>
+<h3 id="1-1-主键索引-INSERT-时工作原理"><a href="#1-1-主键索引-INSERT-时工作原理" class="headerlink" title="1.1 主键索引 INSERT 时工作原理"></a>1.1 主键索引 INSERT 时工作原理</h3><p>网上有很多现成的文章，找了几个不错的，我也就不在重复赘述找了几个帖子</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29118331">MySQL索引总结 - 知乎 (zhihu.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/71022670">mysql为什么建议使用自增主键 - 知乎 (zhihu.com)</a></li>
+</ol>
+<p>总结：在 MySQL InnoDB 中当我们设置了主键索引。其实现时一个B+树（<strong>聚簇索引</strong>），在 INSERT 时，因为是主键自增，保证有了有序，所以可以直接在最后索引的最后插入数据，减少了页分裂，频繁的因为排序问题去重新维护B+树</p>
+<h3 id="1-2-唯一索引-INSERT-时工作原理"><a href="#1-2-唯一索引-INSERT-时工作原理" class="headerlink" title="1.2 唯一索引 INSERT 时工作原理"></a>1.2 唯一索引 INSERT 时工作原理</h3><p>找到了两个关于这方面的文章帖子</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hhhhuanzi/p/12318504.html">MySQL 普通索引和唯一索引的区别 - 禺期 - 博客园 (cnblogs.com)</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28084901/how-does-mysql-determine-if-an-insert-is-unique">https://stackoverflow.com/questions/28084901/how-does-mysql-determine-if-an-insert-is-unique</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/kexiaoleqq/article/details/118497584">深入探究Mysql联合索引的原理——B树|B+树|回表|联合索引|索引覆盖|索引失效_mysql 联合索引建树原理_coke007的博客-CSDN博客</a></li>
+</ol>
+<p>其实网上对于唯一索引的工作原理的资料很少，结合两篇文章的介绍，我猜测在 INSERT 时的工作原理（结合我的需求例子，忘记的可以回顾下）：</p>
+<p>例如在我的案例场景中第二次 INSERT 的时候，插入的数据是 &#96;&#96;checksheet_id &#x3D; 100<code> ,</code>permission_id &#x3D; 90&#96;</p>
+<ol>
+<li>会先根据联合唯一索引 <code>checksheet_permission_u_index(</code>checksheet_id<code>,</code>permission_id<code>)</code> 在索引树中匹配  &#96;&#96;checksheet_id &#x3D; 100 &#96;</li>
+<li>这时候找到第一个值 <code>checksheet_id = 100</code> ,<code>permission_id = 100</code> ，会去匹配联合唯一索引的第二个key <code>permission_id </code></li>
+<li>因为联合索引是按照 key 进行排序维护，所以直接在 &#96;&#96;checksheet_id &#x3D; 100<code> ,</code>permission_id &#x3D; 100<code>这个数据值时，直接比较</code>permission_id&#96; 是否等于 100，不等于则判断是否大于，大于继续往前找，小于则直接在前面插入数据，也就导致在案例场景第二次插入数据看到的结果</li>
+</ol>
+<p>步骤 3 所带来的问题，由于按照唯一索引顺序插入数据，不是按照主键顺序是排序，也就会导致主键所维护的 B+树，要频繁的对主键索引树进行更新维护，是不是也会导致性能问题？</p>
+<h1 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h1><p>由于创建了唯一索引在 INSERT 数据时，在磁盘中的插入位置是根据唯一索引来决定的，不是按照主键顺序插入数据，这可能会导致主键的索引树不断需要更新维护，代理性能问题，当我们在生产中使用唯一索引时，应该要思考，唯一索引是不是必须，有没有其他更好的解决方案</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2023/10/13/Mysql%20%E8%87%AA%E5%8A%A8%20commit%20%E6%A8%A1%E5%BC%8F%E4%B8%8B%EF%BC%8C%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%BC%9A%E7%AB%8B%E5%8D%B3%20commit/" rel="prev" title="Mysql 自动 commit 模式下，插入数据不会立即 commit">
+                Mysql 自动 commit 模式下，插入数据不会立即 commit <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -380,6 +617,22 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+  <script src="https://utteranc.es/client.js"
+    repo="newGaoXin/newGaoXin.github.io"
+    issue-term="title"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+  </script>
+
+   </div>
+  
+
+
 
         </div>
         
@@ -400,8 +653,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -475,6 +737,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">一、背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%8E%B0%E8%B1%A1"><span class="nav-number">2.</span> <span class="nav-text">二、现象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">三、分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%80%9A%E8%BF%87-SELECT-FROM-%E6%9F%A5%E8%AF%A2%E6%97%B6%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%98%AF%E5%A6%82%E4%BD%95%E6%8E%92%E5%BA%8F%E7%9A%84"><span class="nav-number">3.1.</span> <span class="nav-text">1 通过 SELECT * FROM 查询时，数据是如何排序的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-SELECT-FROM-%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%98%AF%E6%8C%89%E7%85%A7%E4%B8%BB%E9%94%AEid%E6%8E%92%E5%BA%8F%E5%90%97%EF%BC%9F"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 SELECT * FROM 查询结果是按照主键id排序吗？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%B4%A2%E5%BC%95-INSERT-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">2 索引 INSERT 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95-INSERT-%E6%97%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.1.</span> <span class="nav-text">1.1 主键索引 INSERT 时工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95-INSERT-%E6%97%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">3.2.2.</span> <span class="nav-text">1.2 唯一索引 INSERT 时工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">三、总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -635,6 +913,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
