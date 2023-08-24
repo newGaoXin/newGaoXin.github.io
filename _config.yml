@@ -105,4 +105,4 @@ deploy:
   type: git
   repo: git@github.com:newGaoXin/newGaoXin.github.io.git
   branch: main
-  message: 修复日志按钮条状问题
+  message: 取消文章目录自动生成序号
