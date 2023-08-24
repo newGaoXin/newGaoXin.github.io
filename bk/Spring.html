@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content=",," />
 
 
 
@@ -79,12 +79,18 @@
 
 
 
+<meta name="description" content="最近做的一个项目，项目是由公司的架构师搭建的，使用了 Spring Security，但是每次启动控制台日志都会提示生成默认密码，之前遇到的项目都使用了都会把这个去掉，想是不是公司架构师在使用 Spring Security 的时候没有做的那么完美，由此写下这篇文章">
 <meta property="og:type" content="website">
-<meta property="og:title" content="newGaoXin 的博客">
-<meta property="og:url" content="https://newgaoxin.github.io/archives/index.html">
+<meta property="og:title" content="（未完成）Spring Security 去除默认密码生成">
+<meta property="og:url" content="https://newgaoxin.github.io/bk/Spring.html">
 <meta property="og:site_name" content="newGaoXin 的博客">
+<meta property="og:description" content="最近做的一个项目，项目是由公司的架构师搭建的，使用了 Spring Security，但是每次启动控制台日志都会提示生成默认密码，之前遇到的项目都使用了都会把这个去掉，想是不是公司架构师在使用 Spring Security 的时候没有做的那么完美，由此写下这篇文章">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-08-22T11:56:09.000Z">
+<meta property="article:modified_time" content="2023-08-24T15:29:04.042Z">
 <meta property="article:author" content="newGaoXin">
+<meta property="article:tag" content="Spring">
+<meta property="article:tag" content="Spring Security">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +121,13 @@
 
 
 
-  <link rel="canonical" href="https://newgaoxin.github.io/archives/"/>
+  <link rel="canonical" href="https://newgaoxin.github.io/bk/Spring.html"/>
 
 
 
 
 
-  <title>归档 | newGaoXin 的博客</title>
+  <title>（未完成）Spring Security 去除默认密码生成 | newGaoXin 的博客</title>
   
 
 
@@ -140,7 +146,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -268,111 +274,68 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
 
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 2 篇日志。 继续努力。
-      </span>
+	<h1 class="post-title" itemprop="name headline">（未完成）Spring Security 去除默认密码生成</h1>
+
+
+	<div class="post-meta">
+		<div class="post-description">最近做的一个项目，项目是由公司的架构师搭建的，使用了 Spring Security，但是每次启动控制台日志都会提示生成默认密码，之前遇到的项目都使用了都会把这个去掉，想是不是公司架构师在使用 Spring Security 的时候没有做的那么完美，由此写下这篇文章</div>
+	</div>
+
+
+</header>
 
       
+      
+      
+      <div class="post-body">
+        
+        
+          <h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>最近做的一个项目，项目是由公司的架构师搭建的，使用了 Spring Security，但是每次启动控制台日志都会提示生成默认密码，之前遇到的项目都使用了都会把这个去掉，想是不是公司架构师在使用 Spring Security 的时候没有做的那么完美，由此写下这篇文章</p>
+<h2 id="项目技术架构"><a href="#项目技术架构" class="headerlink" title="项目技术架构"></a>项目技术架构</h2><p>Spring Boot 全家桶</p>
+<h1 id="Spring-Security-怎么自动生成默认密码"><a href="#Spring-Security-怎么自动生成默认密码" class="headerlink" title="Spring Security 怎么自动生成默认密码"></a>Spring Security 怎么自动生成默认密码</h1><p>默认密码的生成，是由 <code>spring-boot-autoconfigure </code>包下 <code>UserDetailsServiceAutoConfiguration </code> 自动配置类，来完成的</p>
+<h2 id="UserDetailsServiceAutoConfiguration"><a href="#UserDetailsServiceAutoConfiguration" class="headerlink" title="UserDetailsServiceAutoConfiguration"></a>UserDetailsServiceAutoConfiguration</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AutoConfiguration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(AuthenticationManager.class)</span></span><br><span class="line"><span class="meta">@ConditionalOnBean(ObjectPostProcessor.class)</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean(</span></span><br><span class="line"><span class="meta">		value = &#123; AuthenticationManager.class, AuthenticationProvider.class, UserDetailsService.class,</span></span><br><span class="line"><span class="meta">				AuthenticationManagerResolver.class &#125;,</span></span><br><span class="line"><span class="meta">		type = &#123; &quot;org.springframework.security.oauth2.jwt.JwtDecoder&quot;,</span></span><br><span class="line"><span class="meta">				&quot;org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector&quot;,</span></span><br><span class="line"><span class="meta">				&quot;org.springframework.security.oauth2.client.registration.ClientRegistrationRepository&quot;,</span></span><br><span class="line"><span class="meta">				&quot;org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository&quot; &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UserDetailsServiceAutoConfiguration</span> &#123;</span><br><span class="line">  </span><br><span class="line"> 	<span class="meta">@Bean</span></span><br><span class="line">	<span class="meta">@Lazy</span></span><br><span class="line">	<span class="keyword">public</span> InMemoryUserDetailsManager <span class="title function_">inMemoryUserDetailsManager</span><span class="params">(SecurityProperties properties,</span></span><br><span class="line"><span class="params">			ObjectProvider&lt;PasswordEncoder&gt; passwordEncoder)</span> &#123;</span><br><span class="line">		SecurityProperties.<span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> properties.getUser();</span><br><span class="line">		List&lt;String&gt; roles = user.getRoles();</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">InMemoryUserDetailsManager</span>(User.withUsername(user.getName())</span><br><span class="line">			.password(getOrDeducePassword(user, passwordEncoder.getIfAvailable()))</span><br><span class="line">			.roles(StringUtils.toStringArray(roles))</span><br><span class="line">			.build());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> String <span class="title function_">getOrDeducePassword</span><span class="params">(SecurityProperties.User user, PasswordEncoder encoder)</span> &#123;</span><br><span class="line">		<span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> user.getPassword();</span><br><span class="line">		<span class="keyword">if</span> (user.isPasswordGenerated()) &#123;</span><br><span class="line">			logger.warn(String.format(</span><br><span class="line">					<span class="string">&quot;%n%nUsing generated security password: %s%n%nThis generated password is for development use only. &quot;</span></span><br><span class="line">							+ <span class="string">&quot;Your security configuration must be updated before running your application in &quot;</span></span><br><span class="line">							+ <span class="string">&quot;production.%n&quot;</span>,</span><br><span class="line">					user.getPassword()));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (encoder != <span class="literal">null</span> || PASSWORD_ALGORITHM_PATTERN.matcher(password).matches()) &#123;</span><br><span class="line">			<span class="keyword">return</span> password;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> NOOP_PASSWORD_PREFIX + password;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="注解解读"><a href="#注解解读" class="headerlink" title="注解解读"></a>注解解读</h3><ul>
+<li><code>@AutoConfiguration</code> ：标识是一个自动配置类</li>
+<li><code>@ConditionalOnClass(AuthenticationManager.class)</code>：当 <code>AuthenticationManager.class</code>  仅当指定的类位于类路径上时才匹配</li>
+<li><code>@ConditionalOnBean(ObjectPostProcessor.class)</code>：当 ObjectPostProcessor.class Bean 存在时加载</li>
+<li><code>@ConditionalOnMissingBean</code> 仅当中 BeanFactory 未包含满足指定要求的 Bean 时，才匹配</li>
+</ul>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>如果我们想要在启动项目时，不生成默认的密码只要违背 <code>@ConditionalOnMissingBean</code> 中的条件就可以，即将注解中 </p>
+<p>class 属性指定的</p>
+<ul>
+<li><code>AuthenticationManager.class</code></li>
+<li><code>AuthenticationProvider.class</code></li>
+<li><code>UserDetailsService.class</code></li>
+<li><code>AuthenticationManagerResolver.class</code></li>
+</ul>
+<p>以及 type 属性指定的</p>
+<ul>
+<li><code>org.springframework.security.oauth2.jwt.JwtDecoder</code></li>
+<li><code>org.springframework.security.oauth2.server.resource.introspection.OpaqueTokenIntrospector</code></li>
+<li><code>org.springframework.security.oauth2.client.registration.ClientRegistrationRepository</code></li>
+<li><code>org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository</code></li>
+</ul>
+<p>实现其中任意一个类并注册进 Fatory Bean 中即可，下面我们分别介绍下这些类的作用</p>
+<h2 id="AuthenticationManager-class"><a href="#AuthenticationManager-class" class="headerlink" title="AuthenticationManager.class"></a>AuthenticationManager.class</h2><p>作用：身份管理器负责验证这个<code>Authentication</code></p>
 
         
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2023">2023</h1>
-          </div>
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/10/13/Mysql%20%E8%87%AA%E5%8A%A8%20commit%20%E6%A8%A1%E5%BC%8F%E4%B8%8B%EF%BC%8C%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%BC%9A%E7%AB%8B%E5%8D%B3%20commit/" itemprop="url">
-              
-                <span itemprop="name">Mysql 自动 commit 模式下，插入数据不会立即 commit</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-10-13T15:34:10+08:00"
-              content="2023-10-13" >
-          10-13
-        </time>
       </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2023/08/24/MySQL%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/" itemprop="url">
-              
-                <span itemprop="name">MySQL 中使用唯一索引引发的现象思考</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-08-24T23:08:10+08:00"
-              content="2023-08-24" >
-          08-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
+      
     </div>
+    
+    
+    
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
@@ -380,6 +343,22 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+  <script src="https://utteranc.es/client.js"
+    repo="newGaoXin/newGaoXin.github.io"
+    issue-term="title"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+  </script>
+
+   </div>
+  
+
+
 
         </div>
         
@@ -400,8 +379,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -475,6 +463,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84"><span class="nav-number">1.1.</span> <span class="nav-text">项目技术架构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-Security-%E6%80%8E%E4%B9%88%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E9%BB%98%E8%AE%A4%E5%AF%86%E7%A0%81"><span class="nav-number">2.</span> <span class="nav-text">Spring Security 怎么自动生成默认密码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#UserDetailsServiceAutoConfiguration"><span class="nav-number">2.1.</span> <span class="nav-text">UserDetailsServiceAutoConfiguration</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3%E8%A7%A3%E8%AF%BB"><span class="nav-number">2.1.1.</span> <span class="nav-text">注解解读</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AuthenticationManager-class"><span class="nav-number">2.3.</span> <span class="nav-text">AuthenticationManager.class</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -635,6 +639,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
