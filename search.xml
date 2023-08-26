@@ -1,8 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Mysql 自动 commit 模式下，插入数据不会立即 commit</title>
+    <url>/2023/10/13/Mysql%20%E8%87%AA%E5%8A%A8%20commit%20%E6%A8%A1%E5%BC%8F%E4%B8%8B%EF%BC%8C%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%BC%9A%E7%AB%8B%E5%8D%B3%20commit/</url>
+    <content><![CDATA[<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>在项目中</p>
+<p>流程一（过程中没有使用事务）：</p>
+<p>前端调用后端接口，后端会通过流的形式返回给前端，在最后会将数据持久化到 MySQL 数据库，并返回结束标志返回给前端</p>
+<p>流程二：</p>
+<p>前端收到结束标志后，会在一秒后调用接口刷新页面，调用查询列表接口，会查询流程一持久化数据并展示</p>
+<p>项目技术：Java + SpringBoot + Mybatis-Plus + MySQL</p>
+<h2 id="期望："><a href="#期望：" class="headerlink" title="期望："></a>期望：</h2><p>在流程一插入数据，流程二刷新即能获取到，因为在开发过程中只有 insert 一条数据，所以想法是不需要使用事务，并没有在流程中使用Spring 事务</p>
+<h2 id="结果（问题）："><a href="#结果（问题）：" class="headerlink" title="结果（问题）："></a>结果（问题）：</h2><p>在流程一和流程二<strong>反复快速的操作中</strong>，会出现流程一插入的数据，流程二中前端拉取列表并<strong>没有获取到最新持久化的数据</strong></p>
+<h2 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h2><p>在流程一，插入数据时使用Spring 事务，保证在数据插入成功，commit 之后返回结束标志给前端</p>
+<h2 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h2><h3 id="一、MySQL-自动commit-模式下，插入数据不会立即-commit"><a href="#一、MySQL-自动commit-模式下，插入数据不会立即-commit" class="headerlink" title="一、MySQL 自动commit 模式下，插入数据不会立即 commit"></a>一、MySQL 自动commit 模式下，插入数据不会立即 commit</h3><p>在自动提交模式下，每次 insert 一条数据就会立即执行，但是并不一定会立即 commit。</p>
+<p>在 MySQL 中，自动提交模式下，每个 SQL 语句都会自动成为一个事务，并且在执行完该语句后立即提交（commit）。但是，由于InnoDB 存储引擎采用了写日志（redo log）的机制，即使在自动提交模式下，insert 操作也不一定会立即 commit。</p>
+<p>具体来说，当执行 insert 操作时，InnoDB 会将该操作写入到 redo log 中，然后将该操作应用到内存中的数据页（data page）中。此时，该操作的状态为“未提交”。在后续的操作中，如果需要将数据同步到磁盘中，InnoDB会将redo log中的操作应用到磁盘中的数据页中，并将该操作的状态设置为“已提交”。</p>
+<p>因此，在自动提交模式下，每次insert一条数据就会立即执行，但是并不一定会立即commit。如果需要立即commit，可以使用MySQL的“commit”命令将数据立即提交到磁盘中。</p>
+<h3 id="二、自动提交模式下，多久-commit-一次呢"><a href="#二、自动提交模式下，多久-commit-一次呢" class="headerlink" title="二、自动提交模式下，多久 commit 一次呢"></a>二、自动提交模式下，多久 commit 一次呢</h3><p>在自动提交模式下，insert一条数据之后多久会commit，这个时间是不确定的，取决于多个因素，包括系统负载、磁盘速度、redo log的大小等等。</p>
+<p>在MySQL中，自动提交模式下，每个SQL语句都会自动成为一个事务，并且在执行完该语句后立即提交（commit）。但是，由于InnoDB存储引擎采用了写日志（redo log）的机制，即使在自动提交模式下，insert操作也不一定会立即commit。</p>
+<p>具体来说，当执行insert操作时，InnoDB会将该操作写入到redo log中，然后将该操作应用到内存中的数据页（data page）中。此时，该操作的状态为“未提交”。在后续的操作中，如果需要将数据同步到磁盘中，InnoDB会将redo log中的操作应用到磁盘中的数据页中，并将该操作的状态设置为“已提交”。</p>
+<p>因此，insert操作何时commit取决于多个因素，包括系统负载、磁盘速度、redo log的大小等等。如果需要立即commit，可以使用MySQL的“commit”命令将数据立即提交到磁盘中。</p>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>由于在项目场景中，没有使用事务，所以在 insert 数据持久化到数据库中时，依赖于 MySQL 数据库到自动 commit ，而自动 commit 并不会在每次 insert 之后都会执行，而 commit 时间有取决于系统负载、磁盘速度、redo log的大小等等因素</p>
+<p>当时这个问题也是在开发线测试的时候发现的，开发线的机器资源紧张，或许在 insert 之后，机器资源被其他应用抢占，在流程二结束后，MySQL 抢占到机器资源，持久化到数据库，导致前端并没有拉取到最新数据</p>
+]]></content>
+      <categories>
+        <category>MySQL</category>
+      </categories>
+      <tags>
+        <tag>MySQL</tag>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MySQL 中使用唯一索引引发的现象思考</title>
-    <url>/2023/08/24/MySQL%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/</url>
+    <url>/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/</url>
     <content><![CDATA[<h1 id="一、背景"><a href="#一、背景" class="headerlink" title="一、背景"></a>一、背景</h1><p>我们的项目是以检查开展业务，可以增删改检查表，产品希望检查表进行权限设置，只有拥有指定权限的用户，才可以使用检查表。</p>
 <p>在开发中我在数据库中创建了一张 <code>cehcksheet_use_permission</code>（检查表使用权限表）并使用了唯一索引去做约束</p>
 <p>SQL：</p>
@@ -142,70 +173,49 @@
 <td>140</td>
 </tr>
 </tbody></table>
-<p>证明了按照联合唯一索引去排序的想法，为什么会导致这样子呢？</p>
+<p>数据看起来像是真的在 INSERT 时按照联合唯一索引去排序插入，为什么会导致这样子呢？</p>
 </li>
 </ol>
-<h1 id="三、分析"><a href="#三、分析" class="headerlink" title="三、分析"></a>三、分析</h1><h2 id="1-通过-SELECT-FROM-查询时，数据是如何排序的"><a href="#1-通过-SELECT-FROM-查询时，数据是如何排序的" class="headerlink" title="1 通过 SELECT * FROM 查询时，数据是如何排序的"></a>1 通过 SELECT * FROM 查询时，数据是如何排序的</h2><h3 id="1-1-SELECT-FROM-查询结果是按照主键id排序吗？"><a href="#1-1-SELECT-FROM-查询结果是按照主键id排序吗？" class="headerlink" title="1.1 SELECT * FROM 查询结果是按照主键id排序吗？"></a>1.1 SELECT * FROM 查询结果是按照主键id排序吗？</h3><p>并不是，只是因为我们在创建一张表时，假设表只设置了主键，没有像本篇文章的情况一样还设置的唯一索引，那么通过 <code>SELECT * FROM</code> 查询结果看到数据结果是主键 ID 有序递增，只是因为在插入数据时，是按照了主键索引顺序去插入数据写入到磁盘中，所以当我们 <code>SELECT * FROM</code> 查询的时候，其实看到的是数据存储在磁盘的顺序。</p>
-<p>所以在我的案例场景中，是不是联合索引打破了根据主键索引有序插入这个规则，导致我们看到的数据顺序是按照联合索引去排序的？</p>
-<h2 id="2-索引-INSERT-工作原理"><a href="#2-索引-INSERT-工作原理" class="headerlink" title="2 索引 INSERT 工作原理"></a>2 索引 INSERT 工作原理</h2><p>在创建表的时候我设置了主键索引（<code>id</code>）以及联合唯一索引(<code> checksheet_permission_u_index</code>)</p>
-<h3 id="1-1-主键索引-INSERT-时工作原理"><a href="#1-1-主键索引-INSERT-时工作原理" class="headerlink" title="1.1 主键索引 INSERT 时工作原理"></a>1.1 主键索引 INSERT 时工作原理</h3><p>网上有很多现成的文章，找了几个不错的，我也就不在重复赘述找了几个帖子</p>
+<h1 id="三、分析"><a href="#三、分析" class="headerlink" title="三、分析"></a>三、分析</h1><h2 id="1-通过-SELECT-FROM-查询时，数据是如何排序的"><a href="#1-通过-SELECT-FROM-查询时，数据是如何排序的" class="headerlink" title="1 通过 SELECT * FROM 查询时，数据是如何排序的"></a>1 通过 SELECT * FROM 查询时，数据是如何排序的</h2><p>使用 EXPLAIN 关键字执行</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">EXPLAIN <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> `cehcksheet_use_permission`</span><br></pre></td></tr></table></figure>
+
+<p>结果:</p>
+<p><img src="/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/Snipaste_2023-08-26_15-24-52.png" alt="Snipaste_2023-08-26_15-24-52"></p>
+<p>可以看到使用了唯一索引，也就是说当我们通过 <code>SELECT * FROM</code> 查询时，MySQL 自动会我们选择了索引</p>
+<h2 id="2-那么当-INSERT-唯一索引有发挥作用吗"><a href="#2-那么当-INSERT-唯一索引有发挥作用吗" class="headerlink" title="2 那么当 INSERT 唯一索引有发挥作用吗"></a>2 那么当 INSERT 唯一索引有发挥作用吗</h2><p>在创建表的时候我设置了主键索引（<code>id</code>）以及联合唯一索引(<code> checksheet_permission_u_index</code>)</p>
+<h3 id="2-1-主键索引-INSERT-时工作原理"><a href="#2-1-主键索引-INSERT-时工作原理" class="headerlink" title="2.1 主键索引 INSERT 时工作原理"></a>2.1 主键索引 INSERT 时工作原理</h3><p>网上有很多现成的文章，找了几个不错的，我也就不在重复赘述找了几个帖子</p>
 <ol>
 <li><a href="https://zhuanlan.zhihu.com/p/29118331">MySQL索引总结 - 知乎 (zhihu.com)</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/71022670">mysql为什么建议使用自增主键 - 知乎 (zhihu.com)</a></li>
 </ol>
 <p>总结：在 MySQL InnoDB 中当我们设置了主键索引。其实现时一个B+树（<strong>聚簇索引</strong>），在 INSERT 时，因为是主键自增，保证有了有序，所以可以直接在最后索引的最后插入数据，减少了页分裂，频繁的因为排序问题去重新维护B+树</p>
-<h3 id="1-2-唯一索引-INSERT-时工作原理"><a href="#1-2-唯一索引-INSERT-时工作原理" class="headerlink" title="1.2 唯一索引 INSERT 时工作原理"></a>1.2 唯一索引 INSERT 时工作原理</h3><p>找到了两个关于这方面的文章帖子</p>
+<h3 id="2-2-唯一索引-INSERT-时工作原理"><a href="#2-2-唯一索引-INSERT-时工作原理" class="headerlink" title="2.2 唯一索引 INSERT 时工作原理"></a>2.2 唯一索引 INSERT 时工作原理</h3><p>找到了两个关于这方面的文章帖子</p>
 <ol>
 <li><a href="https://www.cnblogs.com/hhhhuanzi/p/12318504.html">MySQL 普通索引和唯一索引的区别 - 禺期 - 博客园 (cnblogs.com)</a></li>
 <li><a href="https://stackoverflow.com/questions/28084901/how-does-mysql-determine-if-an-insert-is-unique">https://stackoverflow.com/questions/28084901/how-does-mysql-determine-if-an-insert-is-unique</a></li>
 <li><a href="https://blog.csdn.net/kexiaoleqq/article/details/118497584">深入探究Mysql联合索引的原理——B树|B+树|回表|联合索引|索引覆盖|索引失效_mysql 联合索引建树原理_coke007的博客-CSDN博客</a></li>
 </ol>
-<p>其实网上对于唯一索引的工作原理的资料很少，结合两篇文章的介绍，我猜测在 INSERT 时的工作原理（结合我的需求例子，忘记的可以回顾下）：</p>
-<p>例如在我的案例场景中第二次 INSERT 的时候，插入的数据是 &#96;&#96;checksheet_id &#x3D; 100<code> ,</code>permission_id &#x3D; 90&#96;</p>
+<p>其实网上对于唯一索引的工作原理的资料很少，这些是我找的比较清晰的相关文章</p>
+<h3 id="2-3-那么主键索引和唯一索引同时拥有时，如何工作呢？"><a href="#2-3-那么主键索引和唯一索引同时拥有时，如何工作呢？" class="headerlink" title="2.3 那么主键索引和唯一索引同时拥有时，如何工作呢？"></a>2.3 那么主键索引和唯一索引同时拥有时，如何工作呢？</h3><p>我们知道主键设置了自增后，是有 MySQL 分配的 ID，这个 ID 在发生事务回滚时，ID 值也是不会回滚的，那么我们可以插入一条重复数据，看看失败之后的自增ID 是否增加了，如果增加了，那么就是先分配了 ID，先使用主键索引去插入数据，然后又使用唯一索引校验了数据是否重复</p>
+<h4 id="2-3-1-当前的自增-ID-值-d"><a href="#2-3-1-当前的自增-ID-值-d" class="headerlink" title="2.3.1 当前的自增 ID 值 d"></a>2.3.1 当前的自增 ID 值 d</h4><p><img src="/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/%E5%BD%93%E5%89%8D%E8%87%AA%E5%A2%9Eid%E5%80%BC.png" alt="当前自增id值"></p>
+<p>当前自增 ID 值10</p>
+<h4 id="2-3-2-尝试新增一条重复数据"><a href="#2-3-2-尝试新增一条重复数据" class="headerlink" title="2.3.2 尝试新增一条重复数据"></a>2.3.2 尝试新增一条重复数据</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">INSERT INTO `cehcksheet_use_permission`(`checksheet_id`,`permission_id`) VALUES(100,90)</span><br></pre></td></tr></table></figure>
+
+<p>这条是已经添加过得数据，执行后 MySQL 会抛出异常提示： 1062 - Duplicate entry ‘100-90’ for key ‘checksheet_permission_u_index’</p>
+<h4 id="2-3-3-再次查看自增-ID-值"><a href="#2-3-3-再次查看自增-ID-值" class="headerlink" title="2.3.3 再次查看自增 ID 值"></a>2.3.3 再次查看自增 ID 值</h4><p><img src="/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/%E6%8F%92%E5%85%A5%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%A4%B1%E8%B4%A5%E5%90%8E%E7%9A%84%E8%87%AA%E5%A2%9EID%E5%80%BC.png" alt="插入重复数据失败后的自增ID值"></p>
+<p>可以看到自增 ID 值改变了（因为我手误操作了两次，所以这里自增 ID 值展示的是 12）由此可以证明在 INSERT 时数据库会先按照主键插入数据</p>
 <ol>
-<li>会先根据联合唯一索引 <code>checksheet_permission_u_index(</code>checksheet_id<code>,</code>permission_id<code>)</code> 在索引树中匹配  &#96;&#96;checksheet_id &#x3D; 100 &#96;</li>
-<li>这时候找到第一个值 <code>checksheet_id = 100</code> ,<code>permission_id = 100</code> ，会去匹配联合唯一索引的第二个key <code>permission_id </code></li>
-<li>因为联合索引是按照 key 进行排序维护，所以直接在 &#96;&#96;checksheet_id &#x3D; 100<code> ,</code>permission_id &#x3D; 100<code>这个数据值时，直接比较</code>permission_id&#96; 是否等于 100，不等于则判断是否大于，大于继续往前找，小于则直接在前面插入数据，也就导致在案例场景第二次插入数据看到的结果</li>
+<li>因为唯一索引树节点持有的是主键ID，而主键索引树又是聚簇索引，所以只有先根据主键索引树，插入数据</li>
+<li>然后在维护唯一索引时，唯一索引持久的是主键的ID，这时候会进行唯一判断，唯一则插入成功，重复则抛出异常</li>
 </ol>
-<p>步骤 3 所带来的问题，由于按照唯一索引顺序插入数据，不是按照主键顺序是排序，也就会导致主键所维护的 B+树，要频繁的对主键索引树进行更新维护，是不是也会导致性能问题？</p>
-<h1 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h1><p>由于创建了唯一索引在 INSERT 数据时，在磁盘中的插入位置是根据唯一索引来决定的，不是按照主键顺序插入数据，这可能会导致主键的索引树不断需要更新维护，代理性能问题，当我们在生产中使用唯一索引时，应该要思考，唯一索引是不是必须，有没有其他更好的解决方案</p>
+<h1 id="四、-总结"><a href="#四、-总结" class="headerlink" title="四、 总结"></a>四、 总结</h1><h3 id="1-当使用-SELECT-FROM-查询"><a href="#1-当使用-SELECT-FROM-查询" class="headerlink" title="1. 当使用 SELECT * FROM 查询"></a>1. 当使用 SELECT * FROM 查询</h3><p>MySQL 会根据自己判断选择最适合的索引</p>
+<h3 id="2-当一个表同时拥有主键索引和唯一索引，INSERT-时"><a href="#2-当一个表同时拥有主键索引和唯一索引，INSERT-时" class="headerlink" title="2. 当一个表同时拥有主键索引和唯一索引，INSERT 时"></a>2. 当一个表同时拥有主键索引和唯一索引，INSERT 时</h3><p>会先根据主键索引插入数据（因为主键索引又是聚簇索引），然后在维护唯一索引树，这时候进行唯一判断</p>
 ]]></content>
       <categories>
         <category>MySQL</category>
       </categories>
       <tags>
         <tag>MySQL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mysql 自动 commit 模式下，插入数据不会立即 commit</title>
-    <url>/2023/10/13/Mysql%20%E8%87%AA%E5%8A%A8%20commit%20%E6%A8%A1%E5%BC%8F%E4%B8%8B%EF%BC%8C%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%BC%9A%E7%AB%8B%E5%8D%B3%20commit/</url>
-    <content><![CDATA[<h2 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h2><p>在项目中</p>
-<p>流程一（过程中没有使用事务）：</p>
-<p>前端调用后端接口，后端会通过流的形式返回给前端，在最后会将数据持久化到 MySQL 数据库，并返回结束标志返回给前端</p>
-<p>流程二：</p>
-<p>前端收到结束标志后，会在一秒后调用接口刷新页面，调用查询列表接口，会查询流程一持久化数据并展示</p>
-<p>项目技术：Java + SpringBoot + Mybatis-Plus + MySQL</p>
-<h2 id="期望："><a href="#期望：" class="headerlink" title="期望："></a>期望：</h2><p>在流程一插入数据，流程二刷新即能获取到，因为在开发过程中只有 insert 一条数据，所以想法是不需要使用事务，并没有在流程中使用Spring 事务</p>
-<h2 id="结果（问题）："><a href="#结果（问题）：" class="headerlink" title="结果（问题）："></a>结果（问题）：</h2><p>在流程一和流程二<strong>反复快速的操作中</strong>，会出现流程一插入的数据，流程二中前端拉取列表并<strong>没有获取到最新持久化的数据</strong></p>
-<h2 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h2><p>在流程一，插入数据时使用Spring 事务，保证在数据插入成功，commit 之后返回结束标志给前端</p>
-<h2 id="原因："><a href="#原因：" class="headerlink" title="原因："></a>原因：</h2><h3 id="一、MySQL-自动commit-模式下，插入数据不会立即-commit"><a href="#一、MySQL-自动commit-模式下，插入数据不会立即-commit" class="headerlink" title="一、MySQL 自动commit 模式下，插入数据不会立即 commit"></a>一、MySQL 自动commit 模式下，插入数据不会立即 commit</h3><p>在自动提交模式下，每次 insert 一条数据就会立即执行，但是并不一定会立即 commit。</p>
-<p>在 MySQL 中，自动提交模式下，每个 SQL 语句都会自动成为一个事务，并且在执行完该语句后立即提交（commit）。但是，由于InnoDB 存储引擎采用了写日志（redo log）的机制，即使在自动提交模式下，insert 操作也不一定会立即 commit。</p>
-<p>具体来说，当执行 insert 操作时，InnoDB 会将该操作写入到 redo log 中，然后将该操作应用到内存中的数据页（data page）中。此时，该操作的状态为“未提交”。在后续的操作中，如果需要将数据同步到磁盘中，InnoDB会将redo log中的操作应用到磁盘中的数据页中，并将该操作的状态设置为“已提交”。</p>
-<p>因此，在自动提交模式下，每次insert一条数据就会立即执行，但是并不一定会立即commit。如果需要立即commit，可以使用MySQL的“commit”命令将数据立即提交到磁盘中。</p>
-<h3 id="二、自动提交模式下，多久-commit-一次呢"><a href="#二、自动提交模式下，多久-commit-一次呢" class="headerlink" title="二、自动提交模式下，多久 commit 一次呢"></a>二、自动提交模式下，多久 commit 一次呢</h3><p>在自动提交模式下，insert一条数据之后多久会commit，这个时间是不确定的，取决于多个因素，包括系统负载、磁盘速度、redo log的大小等等。</p>
-<p>在MySQL中，自动提交模式下，每个SQL语句都会自动成为一个事务，并且在执行完该语句后立即提交（commit）。但是，由于InnoDB存储引擎采用了写日志（redo log）的机制，即使在自动提交模式下，insert操作也不一定会立即commit。</p>
-<p>具体来说，当执行insert操作时，InnoDB会将该操作写入到redo log中，然后将该操作应用到内存中的数据页（data page）中。此时，该操作的状态为“未提交”。在后续的操作中，如果需要将数据同步到磁盘中，InnoDB会将redo log中的操作应用到磁盘中的数据页中，并将该操作的状态设置为“已提交”。</p>
-<p>因此，insert操作何时commit取决于多个因素，包括系统负载、磁盘速度、redo log的大小等等。如果需要立即commit，可以使用MySQL的“commit”命令将数据立即提交到磁盘中。</p>
-<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><p>由于在项目场景中，没有使用事务，所以在 insert 数据持久化到数据库中时，依赖于 MySQL 数据库到自动 commit ，而自动 commit 并不会在每次 insert 之后都会执行，而 commit 时间有取决于系统负载、磁盘速度、redo log的大小等等因素</p>
-<p>当时这个问题也是在开发线测试的时候发现的，开发线的机器资源紧张，或许在 insert 之后，机器资源被其他应用抢占，在流程二结束后，MySQL 抢占到机器资源，持久化到数据库，导致前端并没有拉取到最新数据</p>
-]]></content>
-      <categories>
-        <category>MySQL</category>
-      </categories>
-      <tags>
-        <tag>MySQL</tag>
-        <tag>Spring</tag>
       </tags>
   </entry>
 </search>

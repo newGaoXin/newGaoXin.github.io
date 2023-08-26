@@ -82,15 +82,19 @@
 <meta name="description" content="在项目中使用 MySQL 中唯一索引引发的现象，对其进行的思考记录">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL 中使用唯一索引引发的现象思考">
-<meta property="og:url" content="https://newgaoxin.github.io/2023/08/24/MySQL%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/index.html">
+<meta property="og:url" content="https://newgaoxin.github.io/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/index.html">
 <meta property="og:site_name" content="newGaoXin 的博客">
 <meta property="og:description" content="在项目中使用 MySQL 中唯一索引引发的现象，对其进行的思考记录">
 <meta property="og:locale">
+<meta property="og:image" content="https://newgaoxin.github.io/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/Snipaste_2023-08-26_15-24-52.png">
+<meta property="og:image" content="https://newgaoxin.github.io/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/%E5%BD%93%E5%89%8D%E8%87%AA%E5%A2%9Eid%E5%80%BC.png">
+<meta property="og:image" content="https://newgaoxin.github.io/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/%E6%8F%92%E5%85%A5%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%A4%B1%E8%B4%A5%E5%90%8E%E7%9A%84%E8%87%AA%E5%A2%9EID%E5%80%BC.png">
 <meta property="article:published_time" content="2023-08-24T15:08:10.000Z">
-<meta property="article:modified_time" content="2023-08-24T15:18:52.150Z">
+<meta property="article:modified_time" content="2023-08-26T10:07:07.484Z">
 <meta property="article:author" content="newGaoXin">
 <meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://newgaoxin.github.io/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/Snipaste_2023-08-26_15-24-52.png">
 
 
 
@@ -120,7 +124,7 @@
 
 
 
-  <link rel="canonical" href="https://newgaoxin.github.io/2023/08/24/MySQL 中使用唯一索引引发的现象思考/"/>
+  <link rel="canonical" href="https://newgaoxin.github.io/2023/08/24/MySQL中使用唯一索引引发的现象思考/"/>
 
 
 
@@ -287,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://newgaoxin.github.io/2023/08/24/MySQL%20%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/">
+    <link itemprop="mainEntityOfPage" href="https://newgaoxin.github.io/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -524,33 +528,43 @@
 <td>140</td>
 </tr>
 </tbody></table>
-<p>证明了按照联合唯一索引去排序的想法，为什么会导致这样子呢？</p>
+<p>数据看起来像是真的在 INSERT 时按照联合唯一索引去排序插入，为什么会导致这样子呢？</p>
 </li>
 </ol>
-<h1 id="三、分析"><a href="#三、分析" class="headerlink" title="三、分析"></a>三、分析</h1><h2 id="1-通过-SELECT-FROM-查询时，数据是如何排序的"><a href="#1-通过-SELECT-FROM-查询时，数据是如何排序的" class="headerlink" title="1 通过 SELECT * FROM 查询时，数据是如何排序的"></a>1 通过 SELECT * FROM 查询时，数据是如何排序的</h2><h3 id="1-1-SELECT-FROM-查询结果是按照主键id排序吗？"><a href="#1-1-SELECT-FROM-查询结果是按照主键id排序吗？" class="headerlink" title="1.1 SELECT * FROM 查询结果是按照主键id排序吗？"></a>1.1 SELECT * FROM 查询结果是按照主键id排序吗？</h3><p>并不是，只是因为我们在创建一张表时，假设表只设置了主键，没有像本篇文章的情况一样还设置的唯一索引，那么通过 <code>SELECT * FROM</code> 查询结果看到数据结果是主键 ID 有序递增，只是因为在插入数据时，是按照了主键索引顺序去插入数据写入到磁盘中，所以当我们 <code>SELECT * FROM</code> 查询的时候，其实看到的是数据存储在磁盘的顺序。</p>
-<p>所以在我的案例场景中，是不是联合索引打破了根据主键索引有序插入这个规则，导致我们看到的数据顺序是按照联合索引去排序的？</p>
-<h2 id="2-索引-INSERT-工作原理"><a href="#2-索引-INSERT-工作原理" class="headerlink" title="2 索引 INSERT 工作原理"></a>2 索引 INSERT 工作原理</h2><p>在创建表的时候我设置了主键索引（<code>id</code>）以及联合唯一索引(<code> checksheet_permission_u_index</code>)</p>
-<h3 id="1-1-主键索引-INSERT-时工作原理"><a href="#1-1-主键索引-INSERT-时工作原理" class="headerlink" title="1.1 主键索引 INSERT 时工作原理"></a>1.1 主键索引 INSERT 时工作原理</h3><p>网上有很多现成的文章，找了几个不错的，我也就不在重复赘述找了几个帖子</p>
+<h1 id="三、分析"><a href="#三、分析" class="headerlink" title="三、分析"></a>三、分析</h1><h2 id="1-通过-SELECT-FROM-查询时，数据是如何排序的"><a href="#1-通过-SELECT-FROM-查询时，数据是如何排序的" class="headerlink" title="1 通过 SELECT * FROM 查询时，数据是如何排序的"></a>1 通过 SELECT * FROM 查询时，数据是如何排序的</h2><p>使用 EXPLAIN 关键字执行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN <span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> `cehcksheet_use_permission`</span><br></pre></td></tr></table></figure>
+
+<p>结果:</p>
+<p><img src="/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/Snipaste_2023-08-26_15-24-52.png" alt="Snipaste_2023-08-26_15-24-52"></p>
+<p>可以看到使用了唯一索引，也就是说当我们通过 <code>SELECT * FROM</code> 查询时，MySQL 自动会我们选择了索引</p>
+<h2 id="2-那么当-INSERT-唯一索引有发挥作用吗"><a href="#2-那么当-INSERT-唯一索引有发挥作用吗" class="headerlink" title="2 那么当 INSERT 唯一索引有发挥作用吗"></a>2 那么当 INSERT 唯一索引有发挥作用吗</h2><p>在创建表的时候我设置了主键索引（<code>id</code>）以及联合唯一索引(<code> checksheet_permission_u_index</code>)</p>
+<h3 id="2-1-主键索引-INSERT-时工作原理"><a href="#2-1-主键索引-INSERT-时工作原理" class="headerlink" title="2.1 主键索引 INSERT 时工作原理"></a>2.1 主键索引 INSERT 时工作原理</h3><p>网上有很多现成的文章，找了几个不错的，我也就不在重复赘述找了几个帖子</p>
 <ol>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29118331">MySQL索引总结 - 知乎 (zhihu.com)</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/71022670">mysql为什么建议使用自增主键 - 知乎 (zhihu.com)</a></li>
 </ol>
 <p>总结：在 MySQL InnoDB 中当我们设置了主键索引。其实现时一个B+树（<strong>聚簇索引</strong>），在 INSERT 时，因为是主键自增，保证有了有序，所以可以直接在最后索引的最后插入数据，减少了页分裂，频繁的因为排序问题去重新维护B+树</p>
-<h3 id="1-2-唯一索引-INSERT-时工作原理"><a href="#1-2-唯一索引-INSERT-时工作原理" class="headerlink" title="1.2 唯一索引 INSERT 时工作原理"></a>1.2 唯一索引 INSERT 时工作原理</h3><p>找到了两个关于这方面的文章帖子</p>
+<h3 id="2-2-唯一索引-INSERT-时工作原理"><a href="#2-2-唯一索引-INSERT-时工作原理" class="headerlink" title="2.2 唯一索引 INSERT 时工作原理"></a>2.2 唯一索引 INSERT 时工作原理</h3><p>找到了两个关于这方面的文章帖子</p>
 <ol>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hhhhuanzi/p/12318504.html">MySQL 普通索引和唯一索引的区别 - 禺期 - 博客园 (cnblogs.com)</a></li>
 <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28084901/how-does-mysql-determine-if-an-insert-is-unique">https://stackoverflow.com/questions/28084901/how-does-mysql-determine-if-an-insert-is-unique</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/kexiaoleqq/article/details/118497584">深入探究Mysql联合索引的原理——B树|B+树|回表|联合索引|索引覆盖|索引失效_mysql 联合索引建树原理_coke007的博客-CSDN博客</a></li>
 </ol>
-<p>其实网上对于唯一索引的工作原理的资料很少，结合两篇文章的介绍，我猜测在 INSERT 时的工作原理（结合我的需求例子，忘记的可以回顾下）：</p>
-<p>例如在我的案例场景中第二次 INSERT 的时候，插入的数据是 &#96;&#96;checksheet_id &#x3D; 100<code> ,</code>permission_id &#x3D; 90&#96;</p>
+<p>其实网上对于唯一索引的工作原理的资料很少，这些是我找的比较清晰的相关文章</p>
+<h3 id="2-3-那么主键索引和唯一索引同时拥有时，如何工作呢？"><a href="#2-3-那么主键索引和唯一索引同时拥有时，如何工作呢？" class="headerlink" title="2.3 那么主键索引和唯一索引同时拥有时，如何工作呢？"></a>2.3 那么主键索引和唯一索引同时拥有时，如何工作呢？</h3><p>我们知道主键设置了自增后，是有 MySQL 分配的 ID，这个 ID 在发生事务回滚时，ID 值也是不会回滚的，那么我们可以插入一条重复数据，看看失败之后的自增ID 是否增加了，如果增加了，那么就是先分配了 ID，先使用主键索引去插入数据，然后又使用唯一索引校验了数据是否重复</p>
+<h4 id="2-3-1-当前的自增-ID-值-d"><a href="#2-3-1-当前的自增-ID-值-d" class="headerlink" title="2.3.1 当前的自增 ID 值 d"></a>2.3.1 当前的自增 ID 值 d</h4><p><img src="/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/%E5%BD%93%E5%89%8D%E8%87%AA%E5%A2%9Eid%E5%80%BC.png" alt="当前自增id值"></p>
+<p>当前自增 ID 值10</p>
+<h4 id="2-3-2-尝试新增一条重复数据"><a href="#2-3-2-尝试新增一条重复数据" class="headerlink" title="2.3.2 尝试新增一条重复数据"></a>2.3.2 尝试新增一条重复数据</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO `cehcksheet_use_permission`(`checksheet_id`,`permission_id`) VALUES(100,90)</span><br></pre></td></tr></table></figure>
+
+<p>这条是已经添加过得数据，执行后 MySQL 会抛出异常提示： 1062 - Duplicate entry ‘100-90’ for key ‘checksheet_permission_u_index’</p>
+<h4 id="2-3-3-再次查看自增-ID-值"><a href="#2-3-3-再次查看自增-ID-值" class="headerlink" title="2.3.3 再次查看自增 ID 值"></a>2.3.3 再次查看自增 ID 值</h4><p><img src="/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/%E6%8F%92%E5%85%A5%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE%E5%A4%B1%E8%B4%A5%E5%90%8E%E7%9A%84%E8%87%AA%E5%A2%9EID%E5%80%BC.png" alt="插入重复数据失败后的自增ID值"></p>
+<p>可以看到自增 ID 值改变了（因为我手误操作了两次，所以这里自增 ID 值展示的是 12）由此可以证明在 INSERT 时数据库会先按照主键插入数据</p>
 <ol>
-<li>会先根据联合唯一索引 <code>checksheet_permission_u_index(</code>checksheet_id<code>,</code>permission_id<code>)</code> 在索引树中匹配  &#96;&#96;checksheet_id &#x3D; 100 &#96;</li>
-<li>这时候找到第一个值 <code>checksheet_id = 100</code> ,<code>permission_id = 100</code> ，会去匹配联合唯一索引的第二个key <code>permission_id </code></li>
-<li>因为联合索引是按照 key 进行排序维护，所以直接在 &#96;&#96;checksheet_id &#x3D; 100<code> ,</code>permission_id &#x3D; 100<code>这个数据值时，直接比较</code>permission_id&#96; 是否等于 100，不等于则判断是否大于，大于继续往前找，小于则直接在前面插入数据，也就导致在案例场景第二次插入数据看到的结果</li>
+<li>因为唯一索引树节点持有的是主键ID，而主键索引树又是聚簇索引，所以只有先根据主键索引树，插入数据</li>
+<li>然后在维护唯一索引时，唯一索引持久的是主键的ID，这时候会进行唯一判断，唯一则插入成功，重复则抛出异常</li>
 </ol>
-<p>步骤 3 所带来的问题，由于按照唯一索引顺序插入数据，不是按照主键顺序是排序，也就会导致主键所维护的 B+树，要频繁的对主键索引树进行更新维护，是不是也会导致性能问题？</p>
-<h1 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h1><p>由于创建了唯一索引在 INSERT 数据时，在磁盘中的插入位置是根据唯一索引来决定的，不是按照主键顺序插入数据，这可能会导致主键的索引树不断需要更新维护，代理性能问题，当我们在生产中使用唯一索引时，应该要思考，唯一索引是不是必须，有没有其他更好的解决方案</p>
+<h1 id="四、-总结"><a href="#四、-总结" class="headerlink" title="四、 总结"></a>四、 总结</h1><h3 id="1-当使用-SELECT-FROM-查询"><a href="#1-当使用-SELECT-FROM-查询" class="headerlink" title="1. 当使用 SELECT * FROM 查询"></a>1. 当使用 SELECT * FROM 查询</h3><p>MySQL 会根据自己判断选择最适合的索引</p>
+<h3 id="2-当一个表同时拥有主键索引和唯一索引，INSERT-时"><a href="#2-当一个表同时拥有主键索引和唯一索引，INSERT-时" class="headerlink" title="2. 当一个表同时拥有主键索引和唯一索引，INSERT 时"></a>2. 当一个表同时拥有主键索引和唯一索引，INSERT 时</h3><p>会先根据主键索引插入数据（因为主键索引又是聚簇索引），然后在维护唯一索引树，这时候进行唯一判断</p>
 
       
     </div>
@@ -747,7 +761,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF"><span class="nav-text">一、背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%8E%B0%E8%B1%A1"><span class="nav-text">二、现象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E6%9E%90"><span class="nav-text">三、分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%80%9A%E8%BF%87-SELECT-FROM-%E6%9F%A5%E8%AF%A2%E6%97%B6%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%98%AF%E5%A6%82%E4%BD%95%E6%8E%92%E5%BA%8F%E7%9A%84"><span class="nav-text">1 通过 SELECT * FROM 查询时，数据是如何排序的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-SELECT-FROM-%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E6%98%AF%E6%8C%89%E7%85%A7%E4%B8%BB%E9%94%AEid%E6%8E%92%E5%BA%8F%E5%90%97%EF%BC%9F"><span class="nav-text">1.1 SELECT * FROM 查询结果是按照主键id排序吗？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%B4%A2%E5%BC%95-INSERT-%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">2 索引 INSERT 工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95-INSERT-%E6%97%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">1.1 主键索引 INSERT 时工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95-INSERT-%E6%97%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">1.2 唯一索引 INSERT 时工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%BB%E7%BB%93"><span class="nav-text">三、总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF"><span class="nav-text">一、背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%8E%B0%E8%B1%A1"><span class="nav-text">二、现象</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%88%86%E6%9E%90"><span class="nav-text">三、分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E9%80%9A%E8%BF%87-SELECT-FROM-%E6%9F%A5%E8%AF%A2%E6%97%B6%EF%BC%8C%E6%95%B0%E6%8D%AE%E6%98%AF%E5%A6%82%E4%BD%95%E6%8E%92%E5%BA%8F%E7%9A%84"><span class="nav-text">1 通过 SELECT * FROM 查询时，数据是如何排序的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%82%A3%E4%B9%88%E5%BD%93-INSERT-%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E6%9C%89%E5%8F%91%E6%8C%A5%E4%BD%9C%E7%94%A8%E5%90%97"><span class="nav-text">2 那么当 INSERT 唯一索引有发挥作用吗</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95-INSERT-%E6%97%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">2.1 主键索引 INSERT 时工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95-INSERT-%E6%97%B6%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">2.2 唯一索引 INSERT 时工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E9%82%A3%E4%B9%88%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95%E5%92%8C%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%90%8C%E6%97%B6%E6%8B%A5%E6%9C%89%E6%97%B6%EF%BC%8C%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E5%91%A2%EF%BC%9F"><span class="nav-text">2.3 那么主键索引和唯一索引同时拥有时，如何工作呢？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-%E5%BD%93%E5%89%8D%E7%9A%84%E8%87%AA%E5%A2%9E-ID-%E5%80%BC-d"><span class="nav-text">2.3.1 当前的自增 ID 值 d</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-%E5%B0%9D%E8%AF%95%E6%96%B0%E5%A2%9E%E4%B8%80%E6%9D%A1%E9%87%8D%E5%A4%8D%E6%95%B0%E6%8D%AE"><span class="nav-text">2.3.2 尝试新增一条重复数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-%E5%86%8D%E6%AC%A1%E6%9F%A5%E7%9C%8B%E8%87%AA%E5%A2%9E-ID-%E5%80%BC"><span class="nav-text">2.3.3 再次查看自增 ID 值</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%9B%E3%80%81-%E6%80%BB%E7%BB%93"><span class="nav-text">四、 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%BD%93%E4%BD%BF%E7%94%A8-SELECT-FROM-%E6%9F%A5%E8%AF%A2"><span class="nav-text">1. 当使用 SELECT * FROM 查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%BD%93%E4%B8%80%E4%B8%AA%E8%A1%A8%E5%90%8C%E6%97%B6%E6%8B%A5%E6%9C%89%E4%B8%BB%E9%94%AE%E7%B4%A2%E5%BC%95%E5%92%8C%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%EF%BC%8CINSERT-%E6%97%B6"><span class="nav-text">2. 当一个表同时拥有主键索引和唯一索引，INSERT 时</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
