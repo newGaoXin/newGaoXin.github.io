@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -105,4 +105,4 @@ deploy:
   type: git
   repo: git@github.com:newGaoXin/newGaoXin.github.io.git
   branch: main
-  message: 取消文章目录自动生成序号
+  message: MySQL中使用唯一索引引发的现象思考更新
