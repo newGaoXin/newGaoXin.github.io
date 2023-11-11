@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MySQL," />
 
 
 
@@ -79,12 +79,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="newGaoXin 的博客">
-<meta property="og:url" content="https://newgaoxin.github.io/archives/2023/08/index.html">
+<meta name="description" content="实际项目中错误使用的一个记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录将 MySQL count() 函数与 limit 关键字在 SQL 中一起使用的错误场景">
+<meta property="og:url" content="https://newgaoxin.github.io/2023/11/11/%E8%AE%B0%E5%BD%95%E5%B0%86-MySQL-count-%E5%87%BD%E6%95%B0%E4%B8%8E-limit-%E5%85%B3%E9%94%AE%E5%AD%97%E5%9C%A8-SQL-%E4%B8%AD%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8%E7%9A%84%E9%94%99%E8%AF%AF%E5%9C%BA%E6%99%AF/index.html">
 <meta property="og:site_name" content="newGaoXin 的博客">
+<meta property="og:description" content="实际项目中错误使用的一个记录">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-11-11T06:27:21.000Z">
+<meta property="article:modified_time" content="2023-11-11T06:42:30.969Z">
 <meta property="article:author" content="newGaoXin">
+<meta property="article:tag" content="MySQL">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://newgaoxin.github.io/archives/2023/08/"/>
+  <link rel="canonical" href="https://newgaoxin.github.io/2023/11/11/记录将-MySQL-count-函数与-limit-关键字在-SQL-中一起使用的使用的错误场景/"/>
 
 
 
 
 
-  <title>归档 | newGaoXin 的博客</title>
+  <title>记录将 MySQL count() 函数与 limit 关键字在 SQL 中一起使用的错误场景 | newGaoXin 的博客</title>
   
 
 
@@ -140,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -268,74 +273,195 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 3 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2023">2023</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://newgaoxin.github.io/2023/11/11/%E8%AE%B0%E5%BD%95%E5%B0%86-MySQL-count-%E5%87%BD%E6%95%B0%E4%B8%8E-limit-%E5%85%B3%E9%94%AE%E5%AD%97%E5%9C%A8-SQL-%E4%B8%AD%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8%E7%9A%84%E9%94%99%E8%AF%AF%E5%9C%BA%E6%99%AF/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="newGaoXin 的博客">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2023/08/24/MySQL%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%94%AF%E4%B8%80%E7%B4%A2%E5%BC%95%E5%BC%95%E5%8F%91%E7%9A%84%E7%8E%B0%E8%B1%A1%E6%80%9D%E8%80%83/" itemprop="url">
-              
-                <span itemprop="name">MySQL 中使用唯一索引引发的现象思考</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">记录将 MySQL count() 函数与 limit 关键字在 SQL 中一起使用的错误场景</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2023-08-24T23:08:10+08:00"
-              content="2023-08-24" >
-          08-24
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2023-11-11T14:27:21+08:00">
+                2023-11-11
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 本文总阅读量
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+
+          
+              <div class="post-description">
+                  实际项目中错误使用的一个记录
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <h2 id="一、背景（是什么）"><a href="#一、背景（是什么）" class="headerlink" title="一、背景（是什么）"></a>一、背景（是什么）</h2><p>在一直的认知中在 MySQL当使用 count() 函数时，如果要使用 limit 限制 count 函数统计的最大值，SQL 写成以下例句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="number">1</span>) <span class="keyword">from</span> a limit <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>但在一次实际工作中发现，这么使用 <code>limit</code> 关键字，并没有按照我的预期，只返回一条数据的统计结果</p>
+<span id="more"></span>
+
+<h2 id="二、为什么？"><a href="#二、为什么？" class="headerlink" title="二、为什么？"></a>二、为什么？</h2><p>这个主要跟 MySQL SQL查询执行顺序顺序有关系，<code>limit</code> 关键字是对返回数量进行限制，而 <code>count()</code> 函数 在 <code>from</code> 执行后，只返回一条统计总数的数据，所以才会导致 limit 无效</p>
+<p>官方文档：</p>
+<p><a target="_blank" rel="noopener" href="https://dev.mysql.com/doc/refman/8.0/en/limit-optimization.html">MySQL :: MySQL 8.0 Reference Manual :: 8.2.1.19 LIMIT Query Optimization</a></p>
+<h2 id="三、怎么做？"><a href="#三、怎么做？" class="headerlink" title="三、怎么做？"></a>三、怎么做？</h2><p>必须使用子查询才可以，例句如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="number">1</span>) <span class="keyword">from</span> (<span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> a limit <span class="number">10</span>) t</span><br></pre></td></tr></table></figure>
+
+<p>只有这种写法才可以不使子查询失效。</p>
+<h2 id="四、关于-count-函数"><a href="#四、关于-count-函数" class="headerlink" title="四、关于 count() 函数"></a>四、关于 <code>count()</code> 函数</h2><p>在这个问题讨论中，项目的后端负责人，提到说 <code>count()</code> 函数其实是一个分组函数</p>
+<p>但是从官方的文档来看，我们应该把 <code>count()</code> 一类的叫做聚合函数，跟分组函数应该是不同的概念</p>
+<p>我理解上的不同：</p>
+<p>聚合函数：会把结果聚合在一起</p>
+<p>分组函数：会根据规则来分组</p>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2023/10/13/Mysql%20%E8%87%AA%E5%8A%A8%20commit%20%E6%A8%A1%E5%BC%8F%E4%B8%8B%EF%BC%8C%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E4%B8%8D%E4%BC%9A%E7%AB%8B%E5%8D%B3%20commit/" rel="next" title="Mysql 自动 commit 模式下，插入数据不会立即 commit">
+                <i class="fa fa-chevron-left"></i> Mysql 自动 commit 模式下，插入数据不会立即 commit
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -343,6 +469,22 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+      
+  <script src="https://utteranc.es/client.js"
+    repo="newGaoXin/newGaoXin.github.io"
+    issue-term="title"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+  </script>
+
+   </div>
+  
+
+
 
         </div>
         
@@ -363,8 +505,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -438,6 +589,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E8%83%8C%E6%99%AF%EF%BC%88%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%89"><span class="nav-text">一、背景（是什么）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">二、为什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E6%80%8E%E4%B9%88%E5%81%9A%EF%BC%9F"><span class="nav-text">三、怎么做？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E5%85%B3%E4%BA%8E-count-%E5%87%BD%E6%95%B0"><span class="nav-text">四、关于 count() 函数</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -598,6 +765,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
