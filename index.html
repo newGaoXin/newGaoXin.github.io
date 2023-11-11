@@ -375,10 +375,13 @@
 
       
         
-          实际项目中错误使用的一个记录
+          <h2 id="一、背景（是什么）"><a href="#一、背景（是什么）" class="headerlink" title="一、背景（是什么）"></a>一、背景（是什么）</h2><p>在一直的认知中在 MySQL当使用 count() 函数时，如果要使用 limit 限制 count 函数统计的最大值，SQL 写成以下例句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="built_in">count</span>(<span class="number">1</span>) <span class="keyword">from</span> a limit <span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>但在一次实际工作中发现，这么使用 <code>limit</code> 关键字，并没有按照我的预期，只返回一条数据的统计结果</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2023/11/11/%E8%AE%B0%E5%BD%95%E5%B0%86-MySQL-count-%E5%87%BD%E6%95%B0%E4%B8%8E-limit-%E5%85%B3%E9%94%AE%E5%AD%97%E5%9C%A8-SQL-%E4%B8%AD%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8%E7%9A%84%E9%94%99%E8%AF%AF%E5%9C%BA%E6%99%AF/">
+            <a class="btn" href="/2023/11/11/%E8%AE%B0%E5%BD%95%E5%B0%86-MySQL-count-%E5%87%BD%E6%95%B0%E4%B8%8E-limit-%E5%85%B3%E9%94%AE%E5%AD%97%E5%9C%A8-SQL-%E4%B8%AD%E4%B8%80%E8%B5%B7%E4%BD%BF%E7%94%A8%E7%9A%84%E4%BD%BF%E7%94%A8%E7%9A%84%E9%94%99%E8%AF%AF%E5%9C%BA%E6%99%AF/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
