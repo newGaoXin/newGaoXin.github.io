@@ -105,4 +105,4 @@ deploy:
   type: git
   repo: git@github.com:newGaoXin/newGaoXin.github.io.git
   branch: main
-  message: MySQL中使用唯一索引引发的现象思考更新
+  message: 记录将 MySQL count() 函数与 limit 关键字在 SQL 中一起使用的错误场景

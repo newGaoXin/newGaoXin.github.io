@@ -6,7 +6,7 @@ tags:
 - MySQL
 categories:
 - MySQL
-description: 实际项目中错误使用的一个记录
+# description: 实际项目中错误使用的一个记录
 ---
 
 
